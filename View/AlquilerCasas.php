@@ -1,5 +1,5 @@
 <?php include_once '../Controller/CasasController.php';
-    
+
 ?>
 
 <!DOCTYPE html>
@@ -24,14 +24,12 @@
                 <p class="login-box-msg">Alquiler Casas</p>
 
                 <?php
-                    if(isset($_POST["msj"]))
-                    {
-                        echo '<div class="alert alert-danger TextoCentrado">' . $_POST["msj"] . '</div>';
-                    }
+                if (isset($_POST["msj"])) {
+                    echo '<div class="alert alert-danger TextoCentrado">' . $_POST["msj"] . '</div>';
+                }
                 ?>
 
                 <form action="" method="post">
-
 
                     <div class="form-group">
                         <label for="selectDescripcion">Casa</label>
@@ -41,43 +39,37 @@
                             </select>
                         </div>
                     </div>
+
                     <label for="txtPrecio">Precio</label>
                     <div class="input-group mb-3">
-
-                        <input id="txtPrecio" name="txtPrecio" type="number" class="form-control" 
-                            readonly>
-                        <div class=" input-group-append">
-                        <div class="input-group-text">
-
+                        <input id="txtPrecio" name="txtPrecio" type="number" class="form-control" readonly>
+                        <div class="input-group-append">
+                            <div class="input-group-text"></div>
                         </div>
                     </div>
-            </div>
-            <label for="txtUsuario">Usuario Alquiler</label>
-            <div class="input-group mb-3">
 
-                <input id="txtUsuario" name="txtUsuario" type="text" class="form-control" required>
-                <div class="input-group-append">
-                    <div class="input-group-text">
-
+                    <label for="txtUsuario">Usuario Alquiler</label>
+                    <div class="input-group mb-3">
+                        <input id="txtUsuario" name="txtUsuario" type="text" class="form-control" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text"></div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            
 
-            <div class="row">
-                <div class="col-6">
-                    <button type="button" id="btnRegresar" name="btnRegresar" class="btn btn-secondary btn-block"
-                        onclick="location.href='home.php'">Regresar</button>
-                </div>
-                <div class="col-6">
-                    <button type="submit" id="btnRegistrarVehiculo" name="btnRegistrarVehiculo"
-                        class="btn btn-success btn-block">Registrar</button>
-                </div>
-            </div>
-            </form>
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="button" id="btnRegresar" name="btnRegresar"
+                                class="btn btn-secondary btn-block" onclick="location.href='home.php'">Regresar</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" id="btnAlquilar" name="btnAlquilar"
+                                class="btn btn-success btn-block">Registrar</button>
+                        </div>
+                    </div>
+                </form>
 
+            </div>
         </div>
-    </div>
     </div>
 
     <script src="plugins/jquery/jquery.min.js"></script>

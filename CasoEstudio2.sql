@@ -40,7 +40,7 @@ CREATE TABLE `casassistema` (
 
 LOCK TABLES `casassistema` WRITE;
 /*!40000 ALTER TABLE `casassistema` DISABLE KEYS */;
-INSERT INTO `casassistema` VALUES (1,'Casa en San José',190000.00,NULL,NULL),(2,'Casa en Alajuela',145000.00,NULL,NULL),(3,'Casa en Cartago',115000.00,NULL,NULL),(4,'Casa en Heredia',122000.00,NULL,NULL),(5,'Casa en Guanacaste',105000.00,NULL,NULL);
+INSERT INTO `casassistema` VALUES (1,'Casa en San José',190000.00,NULL,NULL),(2,'Casa en Alajuela',145000.00,NULL,NULL),(3,'Casa en Cartago',115000.00,'aaa','2024-08-23 00:26:15'),(4,'Casa en Heredia',122000.00,NULL,NULL),(5,'Casa en Guanacaste',105000.00,'a','2024-08-23 00:25:50');
 /*!40000 ALTER TABLE `casassistema` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,19 +63,17 @@ UNLOCK TABLES;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `actualizarCasas`(
     IN p_IdCasa INT,
-    IN p_usuarioAlquiler VARCHAR(255),
-    IN p_fechaAlquiler DATE
+    IN p_usuarioAlquiler VARCHAR(255)
 )
 BEGIN
-  
     IF p_usuarioAlquiler IS NULL OR TRIM(p_usuarioAlquiler) = '' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El campo UsuarioAlquiler no puede estar vacío';
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'El campo UsuarioAlquiler no puede estar vacío';
     ELSE
-        
         UPDATE casassistema
         SET 
             UsuarioAlquiler = p_usuarioAlquiler,
-            FechaAlquiler = IFNULL(p_fechaAlquiler, CURDATE())
+            FechaAlquiler = NOW()
         WHERE IdCasa = p_IdCasa
           AND FechaAlquiler IS NULL; 
     END IF;
@@ -117,6 +115,54 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `consultarPrecio` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `consultarPrecio`(IN pIdCasa INT)
+BEGIN
+    SELECT 
+        PrecioCasa
+    FROM 
+        casassistema
+    WHERE 
+        IdCasa = pIdCasa;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `consultarPrecioCasa` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `consultarPrecioCasa`(IN pIdCasa BIGINT)
+BEGIN
+    SELECT 
+        PrecioCasa
+    FROM 
+        casassistema
+    WHERE 
+        IdCasa = pIdCasa;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `mostrarDescripcionCasa` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -147,4 +193,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-22  8:59:54
+-- Dump completed on 2024-08-23  0:42:16

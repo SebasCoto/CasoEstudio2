@@ -23,6 +23,14 @@
         }
     }
 
+    if (isset($_POST['action']) && $_POST['action'] == 'consultarPrecioCasa') {
+        $IdCasa = $_POST['IdCasa'];
+        $precioCasa = ConsultarPrecioCasa($IdCasa);
+        echo json_encode($precioCasa);
+        exit();
+    }
+    
+
 
     if(isset($_POST["btnAlquilar"]))
     {
@@ -30,16 +38,16 @@
         $UsuarioAlquiler = $_POST["txtUsuario"];
         
 
-        $respuesta = AlquilerCasasBD($Compra_id,$Abono);
+        $respuesta = AlquilerCasasBD($IdCasa,$UsuarioAlquiler);
 
         if($respuesta == true)
         {
              
-            header("location: ../View/consultaPrincipal.php");
+            header("location: ../View/consultaCasas.php");
         }
         else
         {
-            $_POST["msj"] = "No se ha podido Abonar.";
+            $_POST["msj"] = "No se ha podido Alquilar.";
         }
     }
 

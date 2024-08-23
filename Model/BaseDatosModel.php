@@ -2,7 +2,7 @@
 
     function AbrirBaseDatos()
     {
-        return mysqli_connect('127.0.0.1:3309', 'root', '', 'casoestudiomn');
+        return mysqli_connect('127.0.0.1:3307', 'root', '', 'casoestudiomn');
     }
 
     function CerrarBaseDatos($conexion)

@@ -9,6 +9,19 @@
         return $respuesta;
     }
 
+    function ConsultarPrecioCasa($IdCasa)
+{
+    $conexion = AbrirBaseDatos();
+    $sentencia = $conexion->prepare("CALL consultarPrecioCasa(?)");
+    $sentencia->bind_param("i", $IdCasa);
+    $sentencia->execute();
+    $resultado = $sentencia->get_result();
+    $respuesta = $resultado->fetch_assoc();
+    $sentencia->close();
+    CerrarBaseDatos($conexion);
+    return $respuesta;
+}
+
 
     function AlquilerCasasBD($IdCasa,$UsuarioAlquiler)
     {

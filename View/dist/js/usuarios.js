@@ -1,29 +1,23 @@
-function ConsultarNombre()
-{
-    document.getElementById("btnProcesar").disabled = true;
-    let identificacion =  document.getElementById("txtIdentificacion").value;
+$(document).ready(function () {
+    $('#selectDescripcion').change(function () {
+        let IdCasa = $(this).val();
 
-    if(identificacion.length >= 9)
-    {
-        $.ajax({
-            type : 'GET',
-            url : 'https://apis.gometa.org/cedulas/' + identificacion,
-            dataType : 'json',
-            success: function(data){
-                if(data.resultcount > 0)
-                {
-                    document.getElementById("btnProcesar").disabled = false;
-                    document.getElementById("txtNombre").value = data.nombre;
+        if (IdCasa) {
+            $.ajax({
+                url: '../Controller/CasasController.php',
+                type: 'POST',
+                data: {
+                    action: 'consultarPrecioCasa',
+                    IdCasa: IdCasa
+                },
+                success: function (response) {
+                    let data = JSON.parse(response);
+                    $('#txtPrecio').val(data.PrecioCasa || 0);
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr);
                 }
-                else
-                {
-                    document.getElementById("txtNombre").value = "";
-                }   
-            }
-        });  
-    } 
-    else
-    {
-        document.getElementById("txtNombre").value = "";
-    }
-}
+            });
+        }
+    });
+});
